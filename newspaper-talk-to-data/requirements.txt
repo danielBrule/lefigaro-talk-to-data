@@ -1,0 +1,7 @@
+# Production dependencies
+pyodbc>=5.0.0
+sqlalchemy>=2.0.0
+
+# Dev dependencies (optional)
+pytest>=8.0.0
+black>=24.0.0

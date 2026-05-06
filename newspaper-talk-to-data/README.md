@@ -39,3 +39,38 @@ pip install -r requirements.txt
 - `evaluations/` - benchmark questions and expected SQL/results
 - `infra/` - infrastructure definitions, including Terraform
 - `docs/` - documentation
+
+## Azure SQL View Deployment
+
+SQL view definitions are stored in `sql/views/` and use the `analytics` schema.
+
+### Local development
+
+1. Copy `.env.example` to `.env` and fill in your Azure SQL connection details:
+
+   ```powershell
+   copy .env.example .env
+   # Edit .env with your Azure SQL server, database, username, password
+   ```
+
+2. Deploy views:
+
+   ```powershell
+   cd newspaper-talk-to-data
+   make apply-sql-views
+   ```
+
+### GitHub Actions / CI-CD
+
+ Add the following secrets to your GitHub repository settings:
+   - `AZURE_SQL_SERVER`
+   - `AZURE_SQL_DATABASE`
+   - `AZURE_SQL_USERNAME`
+   - `AZURE_SQL_PASSWORD`
+
+
+
+### Local development now, online later
+
+For local development, keep working from the `newspaper-talk-to-data` folder and use the local `.venv`.
+When you are ready to run online, ensure the same SQL migration files in `sql/views/` are deployed to the Azure SQL instance using the GitHub Action or `make apply-sql-views`.
