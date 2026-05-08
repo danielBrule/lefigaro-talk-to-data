@@ -1,4 +1,4 @@
-.PHONY: help venv install apply-sql-views
+.PHONY: help venv install apply-sql-views start-backend
 
 VENV := .venv
 PYTHON := python
@@ -8,6 +8,7 @@ help:
 	@echo Available targets:
 	@echo   venv
 	@echo   install
+	@echo   start-backend
 	@echo   apply-sql-views
 
 venv:
@@ -16,6 +17,14 @@ venv:
 install: venv
 	".venv\Scripts\python.exe" -m pip --version
 	@if exist "requirements.txt" (".venv\Scripts\python.exe" -m pip install --no-cache-dir -r "requirements.txt") else (echo No requirements.txt found.)
+
+check: install
+	@echo Running syntax checks...
+	".venv\Scripts\python.exe" -c "import py_compile, pathlib; [py_compile.compile(str(p), doraise=True) for p in pathlib.Path('backend').rglob('*.py')]"
+
+start-backend: install
+	@echo Starting backend...
+	".venv\Scripts\python.exe" -m backend.main
 
 apply-sql-views: install
 	@echo Deploying SQL views...

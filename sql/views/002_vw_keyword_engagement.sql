@@ -13,7 +13,7 @@ SELECT
     k.full_keyword,
     COUNT(DISTINCT ak.article_id) AS article_count,
     COUNT(c.id) AS comment_count,
-    AVG(CAST(c.sentiment AS FLOAT)) AS avg_comment_sentiment,
+    COALESCE(AVG(CAST(c.sentiment AS FLOAT)), 0.0) AS avg_comment_sentiment,
     COUNT(DISTINCT c.contributor_id) AS contributor_count
 FROM dbo.core_keywords AS k
 LEFT JOIN dbo.core_article_keywords AS ak ON ak.keyword_id = k.id

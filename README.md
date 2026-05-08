@@ -60,15 +60,42 @@ SQL view definitions are stored in `sql/views/` and use the `analytics` schema.
    make apply-sql-views
    ```
 
+### Run the backend locally
+
+Start the backend API once your dependencies are installed and `.env` is configured:
+
+```powershell
+cd newspaper-talk-to-data
+make start-backend
+```
+
+Alternatively:
+
+```powershell
+cd newspaper-talk-to-data
+.\.venv\Scripts\python.exe backend/main.py
+```
+
+Then open FastAPI docs in your browser:
+
+- `http://localhost:8000/docs` — interactive Swagger UI
+- `http://localhost:8000/redoc` — ReDoc API docs
+- `http://localhost:8000/openapi.json` — raw OpenAPI schema
+
+Example endpoints to test in the browser:
+
+- `http://localhost:8000/api/articles`
+- `http://localhost:8000/api/keywords`
+- `http://localhost:8000/api/contributors`
+- `http://localhost:8000/api/errors`
+
 ### GitHub Actions / CI-CD
 
- Add the following secrets to your GitHub repository settings:
-   - `AZURE_SQL_SERVER`
-   - `AZURE_SQL_DATABASE`
-   - `AZURE_SQL_USERNAME`
-   - `AZURE_SQL_PASSWORD`
-
-
+Add the following secrets to your GitHub repository settings:
+- `AZURE_SQL_SERVER`
+- `AZURE_SQL_DATABASE`
+- `AZURE_SQL_USERNAME`
+- `AZURE_SQL_PASSWORD`
 
 ### Local development now, online later
 

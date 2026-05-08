@@ -5,7 +5,7 @@ Usage:
     python deploy_views.py
 
 This script loads environment variables from the process environment,
-then from `.env` and `.env.dev` if those files exist.
+then from `.env` if that file exists.
 
 Requires environment variables:
     AZURE_SQL_SERVER - SQL Server address
@@ -109,5 +109,4 @@ def deploy_views(views_dir: str = "sql/views"):
 
 if __name__ == "__main__":
     load_env_file(Path(".env"))
-    load_env_file(Path(".env.dev"))
     deploy_views()

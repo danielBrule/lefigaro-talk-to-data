@@ -14,7 +14,7 @@ SELECT
     a.publication_date,
     a.insert_date,
     COUNT(c.id) AS comment_count,
-    AVG(CAST(c.sentiment AS FLOAT)) AS avg_comment_sentiment,
+    COALESCE(AVG(CAST(c.sentiment AS FLOAT)), 0.0) AS avg_comment_sentiment,
     SUM(c.replies_count) AS total_replies,
     COUNT(DISTINCT ak.keyword_id) AS keyword_count
 FROM dbo.core_articles AS a
