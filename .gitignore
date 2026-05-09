@@ -16,3 +16,7 @@ node_modules/
 *.tfstate
 *.tfstate.backup
 .terraform/
+
+
+# other 
+output.txt

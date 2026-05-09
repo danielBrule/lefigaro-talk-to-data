@@ -1,4 +1,4 @@
-.PHONY: help venv install apply-sql-views start-backend
+.PHONY: help venv install apply-sql-views start-backend tests
 
 VENV := .venv
 PYTHON := python
@@ -10,6 +10,7 @@ help:
 	@echo   install
 	@echo   start-backend
 	@echo   apply-sql-views
+	@echo   tests
 
 venv:
 	@if not exist ".venv\Scripts\python.exe" ($(PYTHON) -m venv .venv) else (echo Virtual environment already exists.)
@@ -29,3 +30,7 @@ start-backend: install
 apply-sql-views: install
 	@echo Deploying SQL views...
 	".venv\Scripts\python.exe" backend\db\deploy_views.py
+
+tests: install
+	@echo Running tests...
+	@set PYTHONPATH=%CD% && ".venv\Scripts\python.exe" -m pytest backend/tests/ -v
