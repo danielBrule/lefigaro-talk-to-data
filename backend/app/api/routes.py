@@ -5,6 +5,11 @@ from ..services.article_service import get_article, list_articles
 from ..services.contributor_service import get_contributor, list_contributors
 from ..services.ingestion_error_service import list_ingestion_errors
 from ..services.keyword_service import get_keyword, list_keywords
+from ..services.metadata_service import (
+    get_views_metadata,
+    get_metrics_metadata,
+    get_glossary_metadata,
+)
 from ..validators import (
     ArticleResponse,
     ContributorResponse,
@@ -13,6 +18,7 @@ from ..validators import (
 )
 
 router = APIRouter(prefix=API_PREFIX, tags=["analytics"])
+metadata_router = APIRouter(prefix=f"{API_PREFIX}/metadata", tags=["metadata"])
 
 
 @router.get("/articles", response_model=list[ArticleResponse])
@@ -57,6 +63,25 @@ async def read_contributor(contributor_id: str):
 @router.get("/errors", response_model=list[IngestionErrorResponse])
 async def read_ingestion_errors(limit: int = Query(50, ge=1, le=500)):
     return await list_ingestion_errors(limit=limit)
+
+
+# Metadata endpoints
+@metadata_router.get("/views", response_model=list[dict])
+async def get_views():
+    """Get metadata for all analytics views."""
+    return await get_views_metadata()
+
+
+@metadata_router.get("/metrics", response_model=list[dict])
+async def get_metrics():
+    """Get metadata for all metrics."""
+    return await get_metrics_metadata()
+
+
+@metadata_router.get("/glossary", response_model=list[dict])
+async def get_glossary():
+    """Get metadata for all glossary terms."""
+    return await get_glossary_metadata()
 
 
 @router.get("/version", tags=["analytics"])

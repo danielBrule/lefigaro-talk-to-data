@@ -3,7 +3,7 @@ import time
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
-from .api.routes import router
+from .api.routes import router, metadata_router
 from .core.config import API_VERSION
 from .core.logger import logger
 
@@ -57,3 +57,4 @@ async def version():
 
 
 app.include_router(router)
+app.include_router(metadata_router)
