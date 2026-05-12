@@ -20,3 +20,8 @@ node_modules/
 
 # other 
 output.txt
+
+terraform.tfvars
+terraform-debug.log
+infra/terraform/.terraform.lock.hcl
+infra/terraform/schema.json

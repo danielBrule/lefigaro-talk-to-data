@@ -1,4 +1,4 @@
-.PHONY: help venv install apply-sql-views start-backend tests
+.PHONY: help venv install apply-sql-views start-backend infra-init infra-apply tests
 
 VENV := .venv
 PYTHON := python
@@ -10,6 +10,8 @@ help:
 	@echo   install
 	@echo   start-backend
 	@echo   apply-sql-views
+	@echo   infra-init
+	@echo   infra-apply ENV=dev
 	@echo   tests
 
 venv:
@@ -30,6 +32,15 @@ start-backend: install
 apply-sql-views: install
 	@echo Deploying SQL views...
 	".venv\Scripts\python.exe" backend\db\deploy_views.py
+
+infra-init:
+	@echo Initializing Terraform in infra/terraform
+	terraform -chdir=infra/terraform init
+
+infra-apply:
+	@echo Applying Terraform infrastructure for environment $(ENV)
+	@if not defined ENV (echo ENV is not set. Use ENV=dev or ENV=prod && exit 1)
+	terraform -chdir=infra/terraform apply -parallelism=1 -var-file=envs/$(ENV)/terraform.tfvars -auto-approve
 
 tests: install
 	@echo Running tests...

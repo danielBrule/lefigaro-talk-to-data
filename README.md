@@ -40,6 +40,40 @@ pip install -r requirements.txt
 - `infra/` - infrastructure definitions, including Terraform
 - `docs/` - documentation
 
+## Terraform Infrastructure
+
+This repo includes a reusable Terraform module structure for Azure deployment.
+The Terraform configuration supports environment-specific deployments for `dev` and `prod`.
+
+### Included resources
+- Azure Resource Group: `rg-lefigaro-talk2data-<env>`
+- Azure OpenAI account: `openai-lefigaro-<env>`
+- OpenAI deployments:
+  - `talk2data-gpt41mini-schema-retrieval`
+  - `talk2data-gpt41mini-sql-generation`
+  - `talk2data-gpt41mini-summary`
+
+### Terraform layout
+- `infra/terraform/` — root module and provider configuration
+- `infra/terraform/modules/resource_group/` — reusable RG module
+- `infra/terraform/modules/openai/` — reusable OpenAI account + deployment module
+- `infra/terraform/envs/dev/terraform.tfvars` — dev input values
+- `infra/terraform/envs/prod/terraform.tfvars` — prod input values
+
+### Run Terraform
+Use the Makefile wrapper from the repository root:
+
+```powershell
+make infra-init
+make infra-apply ENV=dev
+```
+
+For production, point to the prod tfvars file:
+
+```powershell
+make infra-apply ENV=prod
+```
+
 ## Azure SQL View Deployment
 
 SQL view definitions are stored in `sql/views/` and use the `analytics` schema.
